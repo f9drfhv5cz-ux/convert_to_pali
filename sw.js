@@ -1,26 +1,24 @@
-// เปลี่ยนเลขเวอร์ชันทุกครั้งที่แก้ไฟล์ เพื่อให้เครื่องผู้ใช้โหลดของใหม่
-const CACHE = 'pali-converter-v1';
-const FILES = ['./', 'index.html', 'manifest.json',
-  'icon-180.png', 'icon-192.png', 'icon-512.png'];
+const CACHE = "convert-pali-v1";
+const ASSETS = ["./", "./index.html", "./manifest.json", "./icons/icon-192.png", "./icons/icon-512.png"];
 
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
+self.addEventListener("install", e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
   self.skipWaiting();
 });
 
-self.addEventListener('activate', e => {
+self.addEventListener("activate", e => {
   e.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
-      .then(() => self.clients.claim())
+    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
   );
+  self.clients.claim();
 });
 
-self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
+// network-first: ได้เวอร์ชันล่าสุดเสมอเมื่อออนไลน์ ถ้าออฟไลน์ใช้แคช
+self.addEventListener("fetch", e => {
+  if (e.request.method !== "GET") return;
   e.respondWith(
-    caches.match(e.request, { ignoreSearch: true }).then(hit =>
-      hit || fetch(e.request).catch(() => caches.match('index.html'))
-    )
+    fetch(e.request)
+      .then(r => { const copy = r.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); return r; })
+      .catch(() => caches.match(e.request).then(m => m || caches.match("./index.html")))
   );
 });

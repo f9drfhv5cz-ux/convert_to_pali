@@ -1,15 +1,33 @@
 {
-  "name": "เรียงอักษรและแปลงบาลี ไทย ↔ พม่า ↔ โรมัน",
+  "name": "เรียงอักษรและแปลงบาลี",
   "short_name": "แปลงบาลี",
-  "lang": "th",
-  "start_url": "./",
+  "description": "เรียงอักษรและแปลงบาลี ไทย ↔ พม่า ↔ โรมัน",
+  "start_url": "./index.html",
   "scope": "./",
+  "id": "./index.html",
   "display": "standalone",
-  "background_color": "#f7f9fc",
-  "theme_color": "#3498db",
+  "orientation": "portrait",
+  "lang": "th",
+  "background_color": "#faf3e0",
+  "theme_color": "#8b5a2b",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
